@@ -36,7 +36,7 @@ public class Patient {
 
     private Boolean active;
 
-    public Patient(DataRegistrationPatient data) {
+    public Patient(PatientRegistrationData data) {
         this.active = true;
         this.name = data.name();
         this.email = data.email();
@@ -45,7 +45,7 @@ public class Patient {
         this.address = new Address(data.address());
     }
 
-    public void updateInformation(DataUpdatePatient data) {
+    public void updateInformation(PatientUpdateData data) {
         if (data.name() != null) {
             this.name = data.name();
         }

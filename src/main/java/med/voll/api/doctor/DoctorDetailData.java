@@ -8,7 +8,7 @@ public record DoctorDetailData(
         String nome,
         String email,
         String crm,
-        String telefone,
+        String phone,
         Specialty specialty,
         Address address
 

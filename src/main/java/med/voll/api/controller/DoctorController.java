@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.validation.Valid;
-import med.voll.api.doctor.DoctorListingData;
-import med.voll.api.doctor.DoctorUpdateData;
 import med.voll.api.doctor.Doctor;
 import med.voll.api.doctor.DoctorDetailData;
+import med.voll.api.doctor.DoctorListingData;
 import med.voll.api.doctor.DoctorRegistrationData;
 import med.voll.api.doctor.DoctorRepository;
+import med.voll.api.doctor.DoctorUpdateData;
 
 @RestController
 @RequestMapping("/doctors")
@@ -33,7 +33,7 @@ public class DoctorController {
 
     @PostMapping
     @Transactional
-     public ResponseEntity register(@RequestBody @Valid DoctorRegistrationData data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity register(@RequestBody @Valid DoctorRegistrationData data, UriComponentsBuilder uriBuilder) {
         var doctor = new Doctor(data);
         repository.save(doctor);
 
@@ -43,9 +43,16 @@ public class DoctorController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DoctorListingData>> lists(@PageableDefault(size = 10, sort = { "name" }) Pageable pagination) {
+    public ResponseEntity<Page<DoctorListingData>> lists(
+            @PageableDefault(size = 10, sort = { "name" }) Pageable pagination) {
         var page = repository.findAllByActiveTrue(pagination).map(DoctorListingData::new);
         return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detail(@PathVariable Long id) {
+        var doctor = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DoctorDetailData(doctor));
     }
 
     @PutMapping
@@ -64,12 +71,6 @@ public class DoctorController {
         doctor.remove();
 
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity detail(@PathVariable Long id) {
-        var doctor = repository.getReferenceById(id);
-        return ResponseEntity.ok(new DoctorDetailData(doctor));
     }
 
 }
