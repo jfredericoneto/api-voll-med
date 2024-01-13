@@ -41,7 +41,7 @@ public class Doctor {
         this.address = new Address(data.address());
     }
 
-    public void updateInformation(DataUpdateDoctor data) {
+    public void updateInformation(DoctorUpdateData data) {
         if (data.name() != null) {
             this.name = data.name();
         }
