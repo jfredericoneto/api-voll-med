@@ -22,9 +22,19 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
                 select c.doctor.id from Consultation c
                 where
                 c.date = :date
+                and
+                c.cancellationReason is null
             )
             order by rand()
             limit 1
             """)
     Doctor chooseFreeRandomDoctorOnTheDate(Specialty specialty, LocalDateTime date);
+
+    @Query("""
+            select d.active
+            from Doctor d
+            where
+            d.id = :id
+            """)
+    Boolean findActiveById(Long id);
 }
