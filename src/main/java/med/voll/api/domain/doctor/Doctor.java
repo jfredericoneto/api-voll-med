@@ -1,51 +1,47 @@
-package med.voll.api.patient;
+package med.voll.api.domain.doctor;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.address.Address;
+import med.voll.api.domain.address.Address;
 
-
-@Table(name = "patients")
-@Entity(name = "Patient")
+@Table(name = "doctors")
+@Entity(name = "Doctor")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Patient {
+public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
-
+    private String crm;
     private String phone;
 
-    private String cpf;
+    @Enumerated(EnumType.STRING)
+    private Specialty specialty;
 
     @Embedded
     private Address address;
 
     private Boolean active;
 
-    public Patient(PatientRegistrationData data) {
+    public Doctor(DoctorRegistrationData data) {
         this.active = true;
         this.name = data.name();
         this.email = data.email();
+        this.crm = data.crm();
         this.phone = data.phone();
-        this.cpf = data.cpf();
+        this.specialty = data.specialty();
         this.address = new Address(data.address());
     }
 
-    public void updateInformation(PatientUpdateData data) {
+    public void updateInformation(DoctorUpdateData data) {
         if (data.name() != null) {
             this.name = data.name();
         }
