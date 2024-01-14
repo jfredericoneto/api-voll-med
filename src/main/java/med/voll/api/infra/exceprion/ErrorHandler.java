@@ -1,4 +1,4 @@
-package med.voll.api.infra;
+package med.voll.api.infra.exceprion;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
