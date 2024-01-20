@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.domain.consultation.ConsultationCancelData;
-import med.voll.api.domain.consultation.ConsultationDetailData;
 import med.voll.api.domain.consultation.ConsultationSchedule;
 import med.voll.api.domain.consultation.ConsultationScheduleData;
 
